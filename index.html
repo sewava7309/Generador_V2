@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generador de Usuarios</title>
+
+<style>
+body{
+    margin:0;
+    background:#121212;
+    color:white;
+    font-family:Arial,Helvetica,sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.container{
+    background:#1f1f1f;
+    padding:30px;
+    border-radius:15px;
+    width:420px;
+    text-align:center;
+    box-shadow:0 0 20px rgba(0,0,0,.5);
+}
+
+button{
+    margin-top:15px;
+    padding:12px 20px;
+    border:none;
+    border-radius:8px;
+    background:#00b894;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#00a383;
+}
+
+#resultado{
+    margin-top:20px;
+    text-align:left;
+    background:#2c2c2c;
+    padding:15px;
+    border-radius:10px;
+    min-height:180px;
+    overflow:auto;
+}
+
+.usuario{
+    padding:5px 0;
+    border-bottom:1px solid #444;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+    <h2>Generador de Usuarios</h2>
+
+    <button onclick="generar()">Generar 20 usuarios</button>
+
+    <div id="resultado"></div>
+</div>
+
+<script>
+const hombres = [
+"Felipe","Luis","Carlos","Diego","Jorge","Miguel","Kevin","Mateo",
+"Sebastian","Daniel","Alejandro","Cristian","Jhon","Brayan","Jean",
+"Adrian","Eduardo","Fernando","Gabriel","Hugo","Ivan","Jose",
+"Leonardo","Manuel","Nicolas","Oscar","Pablo","Raul","Ricardo",
+"Samuel","Tomas","Victor","Yordi","Alonso","Andres","Arturo",
+"Bruno","Cesar","David","Erick","Franco","Gustavo","Henry",
+"Ismael","Julio","Kevin","Luciano","Martin","Renzo","William"
+];
+
+const mujeres = [
+"Kiara","Sofia","Camila","Valeria","Lucia","Andrea","Nicole",
+"Renata","Paola","Emilia","Daniela","Alejandra","Fernanda",
+"Mariana","Diana","Carla","Claudia","Vanessa","Yuliana",
+"Melissa","Milagros","Rosa","Karen","Jazmin","Bianca",
+"Brenda","Cynthia","Dayana","Eliana","Fiorella","Gabriela",
+"Ingrid","Jenifer","Katherine","Leslie","Liliana","Lorena",
+"Lucero","Maribel","Natalia","Noelia","Patricia","Rocio",
+"Ruth","Sandra","Silvana","Tatiana","Veronica","Yessenia","Zulema"
+];
+
+const apellidos = [
+"Huaman","Lopez","Lopes","Garcia","Perez","Torres","Flores",
+"Vargas","Rojas","Mendoza","Castillo","Sanchez","Quispe",
+"Ramirez","Gutierrez","Silva","Fernandez","Paredes","Cruz",
+"Salazar","Lara","Diaz","Morales","Vega","Navarro","Campos",
+"Cordero","Chavez","Espinoza","Benites","Aguilar","Valdez",
+"Cerna","Alarcon","Carranza","Cordova","Delgado","Fuentes",
+"Gamarra","Herrera","Leiva","Marquez","Mejia","Ortega",
+"Palacios","Peña","Reyes","Rios","Suarez","Zambrano"
+];
+
+function random(lista){
+    return lista[Math.floor(Math.random()*lista.length)];
+}
+
+function crearUsuario(listaNombres){
+    return random(listaNombres) +
+           random(apellidos) +
+           random(apellidos) +
+           Math.floor(Math.random()*100);
+}
+
+function generar(){
+
+    const usados = new Set();
+    const salida = document.getElementById("resultado");
+    salida.innerHTML = "";
+
+    // 50 hombres
+    while([...usados].filter(x=>x.startsWith("H-")).length < 50){
+        usados.add("H-" + crearUsuario(hombres));
+    }
+
+    // 50 mujeres
+    while([...usados].filter(x=>x.startsWith("M-")).length < 50){
+        usados.add("M-" + crearUsuario(mujeres));
+    }
+
+    [...usados]
+    .sort()
+    .forEach(u=>{
+        salida.innerHTML += `<div class="usuario">${u.substring(2)}</div>`;
+    });
+
+}
+function elegir(lista){
+    return lista[Math.floor(Math.random()*lista.length)];
+}
+
+function generar(){
+
+    const usados = new Set();
+    const resultado = document.getElementById("resultado");
+    resultado.innerHTML="";
+
+    while(usados.size < 20){
+
+        let usuario =
+            elegir(nombres) +
+            elegir(apellidos) +
+            elegir(apellidos) +
+            Math.floor(Math.random()*100);
+
+        if(!usados.has(usuario)){
+            usados.add(usuario);
+        }
+    }
+
+    usados.forEach(u=>{
+        resultado.innerHTML += `<div class="usuario">${u}</div>`;
+    });
+
+}
+
+</script>
+
+</body>
+</html>
